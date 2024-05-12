@@ -2,6 +2,26 @@ from datetime import datetime
 from pprint import pprint
 
 
+def criar_registro_operacao(operacao: str, saldo_atual: float, valor: float) -> dict:
+
+    novo_saldo = 0
+
+    if operacao == "Depósito":
+        novo_saldo = (saldo_atual + valor)
+    elif operacao == "Saque":
+        novo_saldo = (saldo_atual - valor)
+
+    registro = {
+        "operação": operacao,
+        "valor": f'R$ {valor:.2f}',
+        "data_hora": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "saldo_antes": f'R$ {saldo_atual:.2f}',
+        "saldo_depois": f'R$ {novo_saldo:.2f}'
+    }
+
+    return registro
+
+
 menu = """
 [d] Depositar
 [s] Sacar
@@ -28,15 +48,9 @@ while True:
         valor = float(input("Insira o valor para depósito: R$ "))
 
         if valor > 0:
-            deposito = {
-                "operação": "Depósito",
-                "valor": f'R$ {valor:.2f}',
-                "data_hora": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                "saldo_antes": f'R$ {saldo:.2f}',
-                "saldo_depois": f'R$ {(saldo + valor):.2f}'
-            }
+            registro = criar_registro_operacao("Depósito", saldo, valor)
             saldo += valor
-            extratos.append(deposito)
+            extratos.append(registro)
             print("Depósito feito com sucesso!")
             print(f'Novo saldo: {saldo:.2f}')
 
@@ -48,15 +62,9 @@ while True:
 
             if valor <= LIMITE:
                 if (saldo - valor) >= 0:
-                    saque = {
-                        "operação": "Saque",
-                        "valor": f'R$ {valor:.2f}',
-                        "data_hora": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                        "saldo_antes": f'R$ {saldo:.2f}',
-                        "saldo_depois": f'R$ {(saldo - valor):.2f}'
-                    }
+                    registro = criar_registro_operacao("Saque", saldo, valor)
                     saldo -= valor
-                    extratos.append(saque)
+                    extratos.append(registro)
                     print("Saque feito com sucesso!")
                     print(f'Novo saldo: {saldo:.2f}')
                     numero_saques += 1
