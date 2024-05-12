@@ -43,7 +43,7 @@ while True:
     opcao = input(menu).lower()
 
     if opcao == 'd':
-        print("Depósito")
+        print(" Depósito ".center(30, '#'))
 
         valor = float(input("Insira o valor para depósito: R$ "))
 
@@ -53,9 +53,12 @@ while True:
             extratos.append(registro)
             print("Depósito feito com sucesso!")
             print(f'Novo saldo: {saldo:.2f}')
+        else:
+            print("Valor inválido, por favor inserir valores acima de 0.")
+        print("#".center(30, '#'))
 
     elif opcao == 's':
-        print("Saque")
+        print(" Saque ".center(30, '#'))
 
         if numero_saques < LIMITE_SAQUES:
             valor = float(input("Insira o valor para saque: R$ "))
@@ -74,9 +77,10 @@ while True:
                 print(f'Valor inserido é maior que o valor limite de R$ {LIMITE:.2f}')
         else:
             print("Número de saques diários foi excedido.")
+        print("#".center(30, '#'))
 
     elif opcao == 'e':
-        print("Extrato")
+        print(" Extrato ".center(30, '#'))
 
         if len(extratos) > 0:
             for extrato in extratos:
@@ -84,8 +88,10 @@ while True:
             print(f'Saldo atual: R$ {saldo:.2f}')
         else:
             print("Não foram realizadas movimentações.")
+        print("#".center(30, '#'))
 
     elif opcao == 'q':
+        print(" FIM ".center(30, '#'))
         break
 
     else:
